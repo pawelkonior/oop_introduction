@@ -33,3 +33,66 @@
 
 ## Inheritance
 - copy all fields and methods from parent class
+
+
+# Context Manager (Protocol) (PEP 343)
+
+```python
+
+def __enter__(self):
+    pass
+
+def __exit__(self, exc_type, exc_val, exc_tb):
+    pass
+
+```
+
+```python
+with expression as x:
+    body
+```
+
+1. expression -> object context manager
+2. '__enter__' -> bound to x
+3. evaluate body
+4. '__exit__' if exception -> pass to '__exit__'
+
+## '__enter__':
+1. Return any value, commonly use object of context-manager
+
+## '__exit__':
+1. Never raise exception
+2. Pass exception out to with-block use '__exit__' return False
+3. If no pass exception return True
+
+
+## contextlib (Standard Library)
+1. module for working with context-managers
+
+```python
+
+@contexlib.contextmanager
+def my_context_manager():
+    #  <Enter>
+    try:
+        yield value
+        #  <Normal Exit>
+    except:
+        #  <Exceptional Exit>
+        raise
+```
+
+## Multiple context-managers
+
+```python
+with cm1() as a, cm2() as b:
+    #  Body
+    pass
+
+with cm1() as a:
+    with cm2() as b:
+        # Body
+        pass
+    
+
+```
